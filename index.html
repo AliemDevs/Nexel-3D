@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineMotion3D</title>
+<canvas id="miCanvas">MineMotion3D</canvas>
+   
+    <!--Vinculacion de estilos-->
+<tag>
+  <link rel="stylesheet"href="/Buttons.css">
+  <link rel="stylesheet"href="/menus.css">
+  <link rel="stylesheet"href="/General.css">
+</tag>
+    <!--Instalacion de Modulos-->
+<tag>
+<script src="https://threejs.org/build/three.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://threejs.org/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/TransformControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/loaders/FBXLoader.js"></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/postprocessing/OutlinePass.js"></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://threejs.org/examples/js/loaders/OBJLoader.js"></script>
+</tag>
+
+</head>
+
+<div class="upBar">
+  <button class="btn-add" id="addButton"<img src="/add.png"></button>
+  
+ <div class="toolbar">
+  <button class="" onclick="undoRedoManager.undo()"><img src="/undo.png"></button>
+</div>
+
+  <button onclick="save"><img src="/menuSide.png"></button>
+  
+</div>
+
+<div class="option">
+  <button onclick="deleteObject()" id="delete, undo"><img src="/trash.png"></button>
+  <button onclick="duplicateObject()"><img src="/copy.png"></button>
+  <button onclick="editObject()"><img src="/edit.png"></button>
+  <button onclick="objectPosition()"><img src="/transform.png"></button>
+  <button onclick="objectRotate()"><img src="/rotation.png"></button>
+  <button onclick="objectScale(), enableScaleControl()"><img src="/scale.png"></button>
+</div>
+
+<div id="model-selector" style="display: none">
+  <button id="close-button" onclick="closeMenu()">✖</button>
+  <div class="model-item" onclick="addSteve() "id="Steve">
+    <img src="/20241024_155249.jpg" alt="Modelo 1" class="model-image">
+    <div class="model-name">Steve</div>
+  </div>
+  <div class="model-item">
+    <img src="https://via.placeholder.com/80" alt="Modelo 2" class="model-image">
+    <div class="model-name">Alex</div>
+  </div>
+  <div class="model-item">
+    <img src="https://via.placeholder.com/80" alt="Modelo 3" class="model-image">
+    <div class="model-name">House</div>
+  </div>
+  <div class="model-item">
+    <img src="https://via.placeholder.com/80" alt="Modelo 4" class="model-image">
+    <div class="model-name">Modelo 4</div>
+  </div>
+  <div class="model-item">
+    <img src="https://via.placeholder.com/80" alt="Modelo 5" class="model-image">
+    <div class="model-name">Modelo 5</div>
+  </div>
+  <div class="model-item">
+    <img src="https://via.placeholder.com/80" alt="Modelo 6" class="model-image">
+    <div class="model-name">Modelo 6</div>
+  </div>
+  <div class="model-item">
+    <img src="https://via.placeholder.com/80" alt="Modelo 7" class="model-image">
+    <div class="model-name">Modelo 7</div>
+  </div>
+  <div class="model-item">
+    <img src="https://via.placeholder.com/80" alt="Modelo 8" class="model-image">
+    <div class="model-name">Modelo 8</div>
+  </div>
+  <div class="model-item">
+    <img src="https://via.placeholder.com/80" alt="Modelo 9" class="model-image">
+    <div class="model-name">Modelo 9</div>
+  </div>
+  <div class="model-item">
+    <img src="https://via.placeholder.com/80" alt="Modelo 10" class="model-image">
+    <div class="model-name">Modelo 10</div>
+  </div>
+</div>
+
+<div class="positionAxis">
+  
+  X
+   <label class="switch">
+  <input type="checkbox" id="toggleMoveX">
+  <span class="slider"></span></label>
+
+  Y
+   <label class="switch">
+  <input type="checkbox" id="toggleMoveY">
+  <span class="slider"></span></label>
+
+  Z
+   <label class="switch">
+  <input type="checkbox" id="toggleMoveZ">
+  <span class="slider"></span></label>
+</div>
+
+<div class="rotationAxis" style="">
+  <div>
+    <label for="rotateX">X</label>
+<input type="range" id="rotateX" min="-180" max="180" step="1" value="0">
+  </div>
+  <div>
+    <label for="rotateY">Y</label>
+  <input type="range" id="rotateY" min="-180" max="180" step="1" value="0">
+  </div>
+  <div>
+    <label for="rotateZ">Z</label>
+  <input type="range" id="rotateZ" min="-180" max="180" step="1" value="0">
+  </div>
+</div>
+
+<div class="scaleAxis">
+  
+  X
+   <label class="switch">
+  <input type="checkbox" id="toggleScaleX">
+  <span class="slider"></span></label>
+
+  Y
+   <label class="switch">
+  <input type="checkbox" id="toggleScaleY">
+  <span class="slider"></span></label>
+
+  Z
+   <label class="switch">
+  <input type="checkbox" id="toggleScaleZ">
+  <span class="slider"></span></label>
+  
+  W
+   <label class="switch">
+  <input type="checkbox" id="toggleScaleW">
+  <span class="slider"></span></label>
+</div>
+
+<div class="Add" id="menu">
+  <div class="menu-item" id="Minecraft">Minecraft</div>
+  <div class="menu-item" id="cubo">Cubo - <img src="/cube.png"></div>
+  <div class="menu-item" id="esfera">Esfera - <img src="/sphere.png"></div>
+  <div class="menu-item" id="plano">Plano - <img src="/plane.png"></div>
+  <div class="menu-item" id="luz">Luz - <img src="/directionalLight.png"></div>
+  <div class="menu-item" onclick="addHemisphereLight()" id="addLightBtn">Luz Hemisferio</div>
+  <div class="menu-item" onclick="addDirectionalLight()" id="addDLightBtn">Luz Direccional</div>
+  <div class="menu-item" onclick="importGLTF(), importJSON()" id="importar">Importar - <img src="/import.png"></div>
+</div>
+
+<div id="objectEditor" style="display: none">
+  
+  <!--Color selector-->
+<input type="button" class="editor-item" id="colorButton" img src="/color.png">
+<input type="color" id="hiddenColorInput" style="display: none;" onchange="updateLightColor(), updateLightDColor()">
+  <!--Image selector-->
+ <input type="file" class="editor-item"id="imageSelector" accept="image/*" onchange="objectTexture()" img="/texture.png">
+<label for="imageSelector" id="imageLabel" style="cursor: pointer">
+</label>
+
+</div>
+
+<!--Vinculacion de Scripts-->
+<tag>
+  <script src="/ObjectSelection.js"></script>
+<script src="/AddObject.js"></script>
+<script src="/SceneAndCamera.js"></script>
+<script src="/Gizmo.js"></script>
+<script src="/ObjectEdit.js"></script>
+<script src="/UI.js"></script>
+<script src="/UndoRedo.js"></script>
+<script src="/projectSaving.js"></script>
+<script src="/AsignMaterial.js"></script>
+<script src="/Extra.js"></script>
+<script src="/modelImport.js"></script>
+</tag> 
