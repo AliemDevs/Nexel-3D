@@ -96,6 +96,9 @@ function animate() {
     updateOutline()
     controls.update();  // Actualizamos los controles de la cámara
     renderer.render(scene, camera);
+    initAmbientOcclusion();
+    setupScene();
+    composer.render();
     
 }
 animate();

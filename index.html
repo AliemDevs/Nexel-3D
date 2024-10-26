@@ -26,6 +26,8 @@
 <script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/postprocessing/OutlinePass.js"></script>
 <script src="https://cdn.rawgit.com/mrdoob/three.js/r128/examples/js/postprocessing/ShaderPass.js"></script>
 <script src="https://threejs.org/examples/js/loaders/OBJLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/AmbientOcclusionShader.js"></script>
 </tag>
 
 </head>
@@ -173,6 +175,11 @@
 <label for="imageSelector" id="imageLabel" style="cursor: pointer">
 </label>
 
+</div>
+
+<div>
+  <label for="ao-toggle">Activar Oclusión Ambiental:</label>
+  <input type="checkbox" id="ao-toggle" onchange="toggleAmbientOcclusion()">
 </div>
 
 <!--Vinculacion de Scripts-->
